@@ -1,6 +1,6 @@
 class Rocket {
   PVector pos, vel, acc, size;
-  float rotation = 0, rotRate = 0, rotAcc = 0, fuel, maxFuel = 3000;
+  float rotation = 0, fuel, maxFuel = 3000;
   boolean exploded = false, boost = false, legs = false, boostRight = false, boostLeft = false;
   Hitbox hitbox;
 
@@ -39,14 +39,9 @@ class Rocket {
     acc.y += planet.gravity;
 
     if (boostRight)
-      rotAcc-=PI/50000;
-    else if (boostLeft)
-      rotAcc+=PI/50000;
-    else
-      rotAcc = 0;
-    rotRate += rotAcc;
-    rotation += rotRate;
-    rotation %= 2*PI;
+      rotation-=PI/50;
+    if (boostLeft)
+      rotation+=PI/50;
 
     if (!legs) {
       int dist = (int)((pos.y+size.y/2-16 - height*0.7)*((float)legPics.length/(height*0.2)));
@@ -66,7 +61,6 @@ class Rocket {
       acc = new PVector();
       vel = new PVector();
       pos.y = height-size.y/2+16;
-      rotRate = 0;
     }
 
     pos.add(vel);
@@ -93,7 +87,7 @@ class Rocket {
   void show() {
     showRocket();
     showFuel();
-    showDebug();
+    //showDebug();
   }
 
   void showRocket() {
@@ -136,7 +130,7 @@ class Rocket {
     line(pos.x+size.x/2, pos.y-size.y/2, pos.x+size.x/2+acc.x*100, pos.y-size.y/2+acc.y*100);
     fill(0);
     text(this.toString(), 100, 50);
-    //hitbox.show(rotation);
+    hitbox.show();
   }
 
   String toString() {
@@ -145,8 +139,6 @@ class Rocket {
     str += "\nacc:\t\t"+acc;
     str += "\nsize:\t\t"+size;
     str += "\nrotation:\t\t"+rotation;
-    str += "\nrotRate\t\t"+rotRate;
-    str += "\nrotAcc:\t\t"+rotAcc;
     str += "\nmaxFuel:\t\t"+maxFuel;
     str += "\nfuel:\t\t"+fuel;
     str += "\nlegPic:\t\t"+legPic;

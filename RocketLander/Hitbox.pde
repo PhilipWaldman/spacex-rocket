@@ -11,18 +11,12 @@ class Hitbox {
     return false;
   }
 
-  void show(float rotation) {
-    pushMatrix();
-    translate(pos.x, pos.y);
-    rotate(rotation);
-
+  void show() {
     noFill();
     rectMode(CENTER);
     strokeWeight(2);
     stroke(0, 0, 255);
-    rect(0, 0, size.x, size.y);
+    rect(pos.x, pos.y, size.x, size.y);
     rectMode(CORNER);
-
-    popMatrix();
   }
 }

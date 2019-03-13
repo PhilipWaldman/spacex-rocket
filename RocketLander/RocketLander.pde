@@ -10,7 +10,6 @@ void setup() {
 
 void draw() {
   background(200, 200, 255);
-
   rocket.update();
   rocket.show();
 
